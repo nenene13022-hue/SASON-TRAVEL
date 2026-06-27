@@ -298,24 +298,27 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
         <div class="slabel">שלב 1 מתוך 7</div>
         <div class="fq">עם מי אתם טסים? ✈️</div>
         <div class="og">
-          <div class="op" onclick="pick(this,'trip','זוג')"><span class="oi">💑</span>זוג</div>
-          <div class="op" onclick="pick(this,'trip','משפחה עם ילדים')"><span class="oi">👨‍👩‍👧‍👦</span>משפחה</div>
-          <div class="op" onclick="pick(this,'trip','חברים')"><span class="oi">👯</span>חברים</div>
-          <div class="op" onclick="pick(this,'trip','יחיד')"><span class="oi">🙋</span>לבד</div>
-          <div class="op" onclick="pick(this,'trip','קבוצה גדולה')"><span class="oi">🎉</span>קבוצה</div>
+          <div class="op" onclick="pickTrip(this,'זוג')"><span class="oi">💑</span>זוג</div>
+          <div class="op" onclick="pickTrip(this,'משפחה עם ילדים')"><span class="oi">👨‍👩‍👧‍👦</span>משפחה</div>
+          <div class="op" onclick="pickTrip(this,'חברים')"><span class="oi">👯</span>חברים</div>
+          <div class="op" onclick="pickTrip(this,'יחיד')"><span class="oi">🙋</span>לבד</div>
+          <div class="op" onclick="pickTrip(this,'קבוצה גדולה')"><span class="oi">🎉</span>קבוצה</div>
         </div>
       </div>
       <div id="s1" style="display:none">
         <div class="slabel">שלב 2 מתוך 7</div>
-        <div class="fq">כמה נוסעים? 👥</div>
-        <div class="rnum"><span id="pv">2</span> <small>אנשים</small></div>
+        <div class="fq">כמה מבוגרים? 👥</div>
+        <div class="rnum"><span id="pv">2</span> <small>מבוגרים</small></div>
         <input type="range" min="1" max="30" value="2" oninput="document.getElementById('pv').textContent=this.value;fd.people=this.value">
-        <div class="fq">יש ילדים? 👶</div>
-        <div class="og">
-          <div class="op" onclick="pick(this,'kids','אין ילדים')"><span class="oi">🚫</span>אין</div>
-          <div class="op" onclick="pick(this,'kids','תינוקות 0-2')"><span class="oi">🍼</span>0–2</div>
-          <div class="op" onclick="pick(this,'kids','ילדים 3-12')"><span class="oi">🧒</span>3–12</div>
-          <div class="op" onclick="pick(this,'kids','נוער 13+')"><span class="oi">🧑</span>13+</div>
+        
+        <!-- מוצג רק למשפחה -->
+        <div id="kids-section" style="display:none">
+          <div class="fq" style="margin-top:8px">כמה ילדים? 👶</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <input class="fi" type="number" min="1" max="10" value="1" style="margin:0;width:80px;text-align:center;font-size:20px;font-weight:700" oninput="fd.numKids=parseInt(this.value)||1;buildKidsAges()">
+            <span style="font-size:14px;color:#7a5c2e">ילדים</span>
+          </div>
+          <div id="kids-ages" style="margin-top:12px"></div>
         </div>
       </div>
       <div id="s2" style="display:none">
@@ -329,6 +332,8 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
           <div class="op" onclick="pick(this,'dest','ארהב')"><span class="oi">🗽</span>ארה"ב</div>
           <div class="op" onclick="pick(this,'dest','הפתיעו אותי')"><span class="oi">🎲</span>הפתיעו!</div>
         </div>
+        <label class="fl" style="margin-top:12px">או כתבו יעד אחר:</label>
+        <input class="fi" type="text" placeholder="לדוגמה: טביליסי, בוקרשט, מלטה..." oninput="fd.dest=this.value;document.querySelectorAll('#s2 .op').forEach(function(o){o.classList.remove('on')})">
       </div>
       <div id="s3" style="display:none">
         <div class="slabel">שלב 4 מתוך 7</div>
@@ -343,7 +348,7 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
         <input class="fi" type="date" id="df" oninput="fd.dateFrom=this.value">
         <label class="fl">תאריך חזרה מועדף</label>
         <input class="fi" type="date" id="dt" oninput="fd.dateTo=this.value">
-        <div class="fq">כמה לילות? 🌙</div>
+        <div class="fq">כמה לילות? 🌙 <small>(במידה ולא מילאתם תאריך מדויק)</small></div>
         <div class="og og3">
           <div class="op" onclick="pick(this,'nights','סופש 3 לילות')"><span class="oi">🌙</span>סופ"ש</div>
           <div class="op" onclick="pick(this,'nights','5 ימים')"><span class="oi">🌙🌙</span>5 ימים</div>
@@ -354,9 +359,9 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
         <div class="slabel">שלב 5 מתוך 7</div>
         <div class="fq">תקציב לאדם? 💰</div>
         <div class="og" style="margin-bottom:16px">
-          <div class="op" onclick="pick(this,'budget','עד 500 דולר')"><span class="oi">🤑</span>עד $500</div>
-          <div class="op" onclick="pick(this,'budget','500-1000 דולר')"><span class="oi">💵</span>$500–$1K</div>
-          <div class="op" onclick="pick(this,'budget','1000-2500 דולר')"><span class="oi">💳</span>$1K–$2.5K</div>
+          <div class="op" onclick="pick(this,'budget','עד ₪2,500')"><span class="oi">🤑</span>עד ₪2,500</div>
+          <div class="op" onclick="pick(this,'budget','₪2,500–₪3,500')"><span class="oi">💵</span>₪2,500–₪3,500</div>
+          <div class="op" onclick="pick(this,'budget','₪3,500+')"><span class="oi">💳</span>₪3,500+</div>
           <div class="op" onclick="pick(this,'budget','ללא הגבלה')"><span class="oi">🌟</span>ללא הגבלה</div>
         </div>
         <div class="fq">כבודה? 🧳 <small>(אפשר כמה)</small></div>
@@ -412,7 +417,7 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
 
 <script>
 var cur=0,TOTAL=7;
-var fd={trip:'',people:2,kids:'',dest:'',when:'',dateFrom:'',dateTo:'',nights:'',budget:'',luggage:[],vibes:[],hotel:''};
+var fd={trip:'',people:2,isFamily:false,numKids:0,kidsAges:[],dest:'',when:'',dateFrom:'',dateTo:'',nights:'',budget:'',luggage:[],vibes:[],hotel:''};
 
 
 
@@ -437,11 +442,49 @@ function showS(n){
   var bn=document.getElementById('bn');
   if(n===TOTAL-1){bn.textContent='🚀 שלחו לי הצעת מחיר!';bn.className='bsubmit';}
   else{bn.textContent='המשך ←';bn.className='bnext';}
+  // הצג/הסתר קטע ילדים
+  if(n===1){
+    var ks=document.getElementById('kids-section');
+    if(ks) ks.style.display=fd.isFamily?'block':'none';
+    if(fd.isFamily) buildKidsAges();
+  }
   document.querySelector('.mbox').scrollTop=0;cur=n;
 }
 function goNext(){if(cur===TOTAL-1){doSubmit();return;}showS(cur+1);}
 function goPrev(){if(cur>0)showS(cur-1);}
 function pick(el,f,v){el.closest('.og').querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});el.classList.add('on');fd[f]=v;}
+
+function pickTrip(el,v){
+  pick(el,'trip',v);
+  if(v==='משפחה עם ילדים'){
+    fd.isFamily=true;
+  } else {
+    fd.isFamily=false;
+    fd.numKids=0;
+    fd.kidsAges=[];
+  }
+}
+
+function buildKidsAges(){
+  var n=fd.numKids||1;
+  var div=document.getElementById('kids-ages');
+  var html='<div class="fq">גיל כל ילד:</div>';
+  for(var i=0;i<n;i++){
+    html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">';
+    html+='<label class="fl" style="margin:0;min-width:60px">ילד '+(i+1)+':</label>';
+    html+='<select class="fi" style="margin:0" onchange="setKidAge('+i+',this.value)">';
+    html+='<option>בחר גיל</option>';
+    for(var a=0;a<=17;a++) html+='<option value="'+a+'">'+a+'</option>';
+    html+='</select></div>';
+  }
+  div.innerHTML=html;
+  if(!fd.kidsAges||fd.kidsAges.length!==n) fd.kidsAges=new Array(n).fill('');
+}
+
+function setKidAge(i,v){
+  if(!fd.kidsAges) fd.kidsAges=[];
+  fd.kidsAges[i]=v;
+}
 function toggleL(el,v){el.classList.toggle('on');if(el.classList.contains('on'))fd.luggage.push(v);else fd.luggage=fd.luggage.filter(function(x){return x!==v});}
 function toggleV(el,v){el.classList.toggle('on');if(el.classList.contains('on'))fd.vibes.push(v);else fd.vibes=fd.vibes.filter(function(x){return x!==v});}
 
@@ -453,6 +496,7 @@ function doSubmit(){
   fd.dateTo=document.getElementById('dt').value;
   var notes=document.getElementById('fno').value.trim();
   var lug=fd.luggage.length?fd.luggage.join(' + '):'לא צוין';
+  var kidsInfo=fd.isFamily&&fd.kidsAges&&fd.kidsAges.length?'ילדים: '+fd.numKids+' (גילאים: '+fd.kidsAges.join(', ')+')':'ללא ילדים';
   var vib=fd.vibes.length?fd.vibes.join(', '):'לא צוין';
   var toClient='היי SASON TRAVEL! מילאתי את הטופס באתר ואשמח לקבל הצעה%0Aשמי '+name+' ומספרי '+phone;
   var toMe='פנייה חדשה מהאתר!%0A%0A'+'שם: '+name+'%0Aטלפון: '+phone+'%0Aנסיעה: '+fd.trip+'%0Aנוסעים: '+fd.people+'%0Aילדים: '+fd.kids+'%0Aיעד: '+fd.dest+'%0Aמתי: '+fd.when+'%0Aיציאה: '+(fd.dateFrom||'לא צוין')+'%0Aחזרה: '+(fd.dateTo||'לא צוין')+'%0Aלילות: '+fd.nights+'%0Aתקציב: '+fd.budget+'%0Aכבודה: '+lug+'%0Aמלון: '+fd.hotel+'%0Aהעדפות: '+vib+'%0Aהערות: '+(notes||'אין');
