@@ -106,6 +106,36 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
 .suc h3{font-size:21px;font-weight:800;color:#1e1508;margin-bottom:9px}
 .suc p{color:#7a5c2e;line-height:1.7;margin-bottom:20px;font-size:14px}
 .swa{display:inline-flex;align-items:center;gap:7px;background:#25d366;color:#fff;text-decoration:none;padding:13px 26px;border-radius:26px;font-size:15px;font-weight:700}
+
+.tab-btn{background:#fff;border:2px solid rgba(196,124,43,0.3);color:#a0621a;padding:10px 22px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}
+.tab-btn.active{background:linear-gradient(135deg,#c47c2b,#e8952e);color:#fff;border-color:transparent}
+.admin-btn{background:#f0f0f0;border-color:#ddd;color:#666;margin-right:auto}
+.admin-btn:hover{background:#e0e0e0}
+
+/* ADMIN PANEL */
+.adm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:20000;justify-content:center;align-items:flex-start;padding:16px;overflow-y:auto}
+.adm-overlay.open{display:flex}
+.adm-box{background:#fff;border-radius:18px;width:100%;max-width:620px;margin:auto;overflow:hidden}
+.adm-head{background:#1e1508;color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+.adm-head h3{font-size:17px;font-weight:700}
+.adm-close{background:rgba(255,255,255,0.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+.adm-body{padding:20px 24px;max-height:75vh;overflow-y:auto}
+.adm-tabs{display:flex;gap:8px;margin-bottom:18px}
+.adm-tab{flex:1;padding:9px;border:2px solid #e0d0b0;border-radius:10px;background:#fff;font-size:13px;font-weight:700;cursor:pointer;color:#7a5c2e;font-family:inherit}
+.adm-tab.active{background:#c47c2b;color:#fff;border-color:#c47c2b}
+.item-row{background:#fdf8f0;border:1px solid rgba(196,124,43,0.2);border-radius:12px;padding:14px;margin-bottom:10px;position:relative}
+.item-row input{width:100%;border:1.5px solid #e0d0b0;border-radius:8px;padding:8px 10px;font-size:13px;margin-bottom:7px;font-family:inherit;direction:rtl;outline:none;color:#1e1508}
+.item-row input:focus{border-color:#c47c2b}
+.item-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.item-row-head span{font-size:13px;font-weight:700;color:#7a5c2e}
+.del-btn{background:#fee;border:1px solid #fcc;color:#c00;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit}
+.add-btn{width:100%;background:#fef3dc;border:2px dashed rgba(196,124,43,0.4);color:#a0621a;padding:11px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;font-family:inherit}
+.save-btn{width:100%;background:#25d366;color:#fff;border:none;padding:13px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px;font-family:inherit}
+.adm-pwd{padding:40px 24px;text-align:center}
+.adm-pwd h3{font-size:18px;font-weight:700;margin-bottom:16px;color:#1e1508}
+.adm-pwd input{width:100%;border:2px solid #e0d0b0;border-radius:10px;padding:11px 14px;font-size:15px;text-align:center;letter-spacing:4px;font-family:inherit;margin-bottom:12px;outline:none}
+.adm-pwd button{width:100%;background:#c47c2b;color:#fff;border:none;padding:13px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+
 </style>
 </head>
 <body>
@@ -142,14 +172,26 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
 </div>
 
 <div id="deals" class="sec">
-  <h2>🔥 דילים חמים</h2>
-  <p class="sec-sub">ההצעות הכי מבוקשות — לחצו לפרטים ישירות בוואטסאפ</p>
-  <div class="deals-grid">
-    <div class="card"><div class="card-img">🏖️</div><div class="card-body"><div class="badge">אתונה
-  </div><h3>אתונה — טיסה + מלון</h3><div class="card-info">6–9 באוגוסט · 3 לילות</div><div class="price">$2000 <small>לאדם</small></div><div class="price-sub">≈ ₪5,280 לאדם</div><a class="card-btn" href="https://wa.me/972545412040?text=היי, אני מעוניין בדיל מיקונוס">💬 רוצה פרטים</a></div></div>
-    <div class="card"><div class="card-img">🌇</div><div class="card-body"><div class="badge">דובאי</div><h3>דובאי — חבילת VIP</h3><div class="card-info">תאריך גמיש · 4 לילות</div><div class="price">$1,199 <small>לאדם</small></div><div class="price-sub">≈ ₪3,620 לאדם</div><a class="card-btn" href="https://wa.me/972545412040?text=היי, אני מעוניין בדיל דובאי">💬 רוצה פרטים</a></div></div>
-    <div class="card"><div class="card-img">🏝️</div><div class="card-body"><div class="badge">לימסול</div><h3>לימסול — טיסה + מלון</h3><div class="card-info">3–6 בספטמבר · 3 לילות</div><div class="price">$1,345 <small>לאדם</small></div><div class="price-sub">≈ ₪4,061 לאדם</div><a class="card-btn" href="https://wa.me/972545412040?text=היי, אני מעוניין בדיל לימסול">💬 רוצה פרטים</a></div></div>
+
+  <!-- TABS -->
+  <div style="display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap">
+    <button class="tab-btn active" id="tab-deals" onclick="switchTab('deals')">🔥 דילים חמים</button>
+    <button class="tab-btn" id="tab-packages" onclick="switchTab('packages')">✈️ חבילות</button>
+    <!-- כפתור עריכה סודי: לחץ A+D+M בו זמנית -->
   </div>
+
+  <!-- DEALS TAB -->
+  <div id="tab-deals-content">
+    <p class="sec-sub">ההצעות הכי מבוקשות — לחצו לפרטים ישירות בוואטסאפ</p>
+    <div class="deals-grid" id="deals-grid"></div>
+  </div>
+
+  <!-- PACKAGES TAB -->
+  <div id="tab-packages-content" style="display:none">
+    <p class="sec-sub">חבילות מלאות הכוללות טיסה, מלון והעברות — הכל בחבילה אחת</p>
+    <div class="deals-grid" id="packages-grid"></div>
+  </div>
+
 </div>
 
 <div class="sec-alt" id="why">
@@ -269,9 +311,9 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
         <input class="fi" type="date" id="dt" oninput="fd.dateTo=this.value">
         <div class="fq">כמה לילות? 🌙</div>
         <div class="og og3">
-          <div class="op" onclick="pick(this,'nights','3–4 לילות')"><span class="oi">🌙</span>3–4</div>
-          <div class="op" onclick="pick(this,'nights','5–7 לילות')"><span class="oi">🌙🌙</span>5–7</div>
-          <div class="op" onclick="pick(this,'nights','שבועיים+')"><span class="oi">🌙🌙🌙</span>שבועיים+</div>
+          <div class="op" onclick="pick(this,'nights','סופ&#34;ש 3 לילות')"><span class="oi">🌙</span>סופ&quot;ש<br><small>3 לילות</small></div>
+          <div class="op" onclick="pick(this,'nights','5 ימים')"><span class="oi">🌙🌙</span>5 ימים</div>
+          <div class="op" onclick="pick(this,'nights','שבוע ומעלה')"><span class="oi">🌙🌙🌙</span>שבוע ומעלה</div>
         </div>
       </div>
 
@@ -472,6 +514,194 @@ function sendMail(name,phone,body){
 <script>
 emailjs.init('dX1N7qdSYPAGsmx9i');
 </script>
+
+
+<!-- ADMIN PANEL -->
+<div class="adm-overlay" id="adminPanel">
+  <div class="adm-box">
+    <div class="adm-head">
+      <h3>⚙️ עריכת דילים וחבילות</h3>
+      <button class="adm-close" onclick="closeAdmin()">✕</button>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="adm-pwd" id="admPwd">
+      <h3>🔐 הכנס סיסמה</h3>
+      <input type="password" id="pwdInput" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPwd()">
+      <button onclick="checkPwd()">כניסה</button>
+    </div>
+
+    <!-- EDITOR -->
+    <div id="admEditor" style="display:none">
+      <div class="adm-body">
+        <div class="adm-tabs">
+          <button class="adm-tab active" id="at-deals" onclick="switchAdmTab('deals')">🔥 דילים חמים</button>
+          <button class="adm-tab" id="at-packages" onclick="switchAdmTab('packages')">✈️ חבילות</button>
+        </div>
+        <div id="adm-deals-list"></div>
+        <div id="adm-packages-list" style="display:none"></div>
+        <button class="add-btn" id="admAddBtn" onclick="addItem()">+ הוסף פריט חדש</button>
+        <button class="save-btn" onclick="saveAll()">💾 שמור ועדכן את האתר</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+var deals = [
+  {emoji:'🏛️',badge:'אתונה',name:'אתונה — מלון 4 כוכבים הכל כלול',info:'6–9 בספטמבר · 3 לילות · חדר זוגי',price:'₪1,978',sub:'הכל כלול · בסיס אירוח מלא',wa:'היי, אני מעוניין בדיל אתונה 6-9 בספטמבר'},
+  {emoji:'🌇',badge:'דובאי',name:'דובאי — חבילת VIP',info:'תאריך גמיש · 4 לילות',price:'$1,199',sub:'≈ ₪3,620 לאדם',wa:'היי, אני מעוניין בדיל דובאי'},
+  {emoji:'🏝️',badge:'לימסול',name:'לימסול — טיסה + מלון',info:'3–6 בספטמבר · 3 לילות',price:'$1,345',sub:'≈ ₪4,061 לאדם',wa:'היי, אני מעוניין בדיל לימסול'}
+];
+var packages = [
+  {emoji:'🌍',badge:'אירופה',name:'חבילת אירופה המלאה',info:'7 לילות · טיסה + מלון + העברות',price:'$2,299',sub:'הכל כלול · לאדם',wa:'היי, אני מעוניין בחבילת אירופה'},
+  {emoji:'🌴',badge:'תאילנד',name:'חבילת תאילנד פרימיום',info:'10 לילות · טיסה + מלון + סיורים',price:'$2,799',sub:'הכל כלול · לאדם',wa:'היי, אני מעוניין בחבילת תאילנד'},
+  {emoji:'🗽',badge:'ניו יורק',name:'חבילת ניו יורק',info:'5 לילות · טיסה + מלון במנהטן',price:'$3,199',sub:'הכל כלול · לאדם',wa:'היי, אני מעוניין בחבילת ניו יורק'}
+];
+
+var admTab = 'deals';
+var PWD = '1302'; // שנה את הסיסמה כאן!
+
+// ===== RENDER =====
+function renderCard(item){
+  return '<div class="card">'+
+    '<div class="card-img">'+item.emoji+'</div>'+
+    '<div class="card-body">'+
+      '<div class="badge">'+item.badge+'</div>'+
+      '<h3>'+item.name+'</h3>'+
+      '<div class="card-info">'+item.info+'</div>'+
+      '<div class="price">'+item.price+' <small>לאדם</small></div>'+
+      '<div class="price-sub">'+item.sub+'</div>'+
+      '<a class="card-btn" href="https://wa.me/972545412040?text='+encodeURIComponent(item.wa)+'">💬 רוצה פרטים</a>'+
+    '</div></div>';
+}
+
+function renderAll(){
+  document.getElementById('deals-grid').innerHTML = deals.map(renderCard).join('');
+  document.getElementById('packages-grid').innerHTML = packages.map(renderCard).join('');
+}
+// Load from localStorage if exists
+function loadSaved(){
+  try{
+    var sd=localStorage.getItem('sason_deals');
+    var sp=localStorage.getItem('sason_packages');
+    if(sd) deals=JSON.parse(sd);
+    if(sp) packages=JSON.parse(sp);
+  }catch(e){}
+}
+loadSaved();
+renderAll();
+
+// ===== TABS =====
+function switchTab(t){
+  document.getElementById('tab-deals-content').style.display = t==='deals'?'block':'none';
+  document.getElementById('tab-packages-content').style.display = t==='packages'?'block':'none';
+  document.getElementById('tab-deals').classList.toggle('active', t==='deals');
+  document.getElementById('tab-packages').classList.toggle('active', t==='packages');
+}
+
+// ===== ADMIN =====
+function openAdmin(){document.getElementById('adminPanel').classList.add('open');}
+function closeAdmin(){document.getElementById('adminPanel').classList.remove('open');}
+document.getElementById('adminPanel').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
+
+function checkPwd(){
+  if(document.getElementById('pwdInput').value===PWD){
+    document.getElementById('admPwd').style.display='none';
+    document.getElementById('admEditor').style.display='block';
+    renderAdm();
+  } else {
+    document.getElementById('pwdInput').value='';
+    document.getElementById('pwdInput').placeholder='סיסמה שגויה ❌';
+  }
+}
+
+function switchAdmTab(t){
+  admTab=t;
+  document.getElementById('at-deals').classList.toggle('active',t==='deals');
+  document.getElementById('at-packages').classList.toggle('active',t==='packages');
+  document.getElementById('adm-deals-list').style.display=t==='deals'?'block':'none';
+  document.getElementById('adm-packages-list').style.display=t==='packages'?'block':'none';
+  renderAdm();
+}
+
+function renderAdm(){
+  ['deals','packages'].forEach(function(type){
+    var arr = type==='deals'?deals:packages;
+    var html = arr.map(function(item,i){
+      return '<div class="item-row">'+
+        '<div class="item-row-head"><span>'+(i+1)+'. '+item.name+'</span>'+
+        '<button class="del-btn" onclick="delItem(''+type+'','+i+')">מחק</button></div>'+
+        '<input placeholder="אמוג'י (לדוגמה: 🏖️)" value="'+item.emoji+'" oninput="updateItem(''+type+'','+i+','emoji',this.value)">'+
+        '<input placeholder="תגית (לדוגמה: מיקונוס)" value="'+item.badge+'" oninput="updateItem(''+type+'','+i+','badge',this.value)">'+
+        '<input placeholder="שם הדיל/חבילה" value="'+item.name+'" oninput="updateItem(''+type+'','+i+','name',this.value)">'+
+        '<input placeholder="תאריכים / פרטים" value="'+item.info+'" oninput="updateItem(''+type+'','+i+','info',this.value)">'+
+        '<input placeholder="מחיר (לדוגמה: $1,749)" value="'+item.price+'" oninput="updateItem(''+type+'','+i+','price',this.value)">'+
+        '<input placeholder="מחיר משני (לדוגמה: ≈ ₪5,280)" value="'+item.sub+'" oninput="updateItem(''+type+'','+i+','sub',this.value)">'+
+        '<input placeholder="הודעת וואטסאפ" value="'+item.wa+'" oninput="updateItem(''+type+'','+i+','wa',this.value)">'+
+      '</div>';
+    }).join('');
+    document.getElementById('adm-'+type+'-list').innerHTML=html;
+  });
+}
+
+function updateItem(type,i,field,val){
+  (type==='deals'?deals:packages)[i][field]=val;
+}
+function delItem(type,i){
+  if(confirm('למחוק את הפריט?')){
+    if(type==='deals') deals.splice(i,1); else packages.splice(i,1);
+    renderAdm(); renderAll();
+  }
+}
+function addItem(){
+  var blank={emoji:'\u2708\uFE0F',badge:'יעד חדש',name:'שם הדיל',info:'תאריכים פרטים',price:'$0',sub:'לאדם',wa:'היי אני מעוניין'};
+  if(admTab==='deals') deals.push(JSON.parse(JSON.stringify(blank)));
+  else packages.push(JSON.parse(JSON.stringify(blank)));
+  renderAdm(); renderAll();
+}
+function saveAll(){
+  try{
+    localStorage.setItem('sason_deals', JSON.stringify(deals));
+    localStorage.setItem('sason_packages', JSON.stringify(packages));
+  }catch(e){}
+  renderAll();
+  closeAdmin();
+  alert('✅ נשמר! הדילים והחבילות עודכנו ויישמרו גם אחרי רענון.');
+}
+</script>
+
+
+
+<script>
+// כניסה סודית - לחיצה על הלוגו 5 פעמים
+var _lc=0,_lt=0;
+function _logoTap(){
+  var now=Date.now();
+  if(now-_lt>2000) _lc=0;
+  _lt=now;
+  _lc++;
+  if(_lc>=5){_lc=0;openAdmin();}
+}
+window.addEventListener('load',function(){
+  var logo=document.querySelector('img.logo');
+  if(logo){logo.addEventListener('click',_logoTap);}
+});
+// מקלדת: Ctrl+Shift+E
+document.addEventListener('keydown',function(e){
+  if(e.ctrlKey&&e.shiftKey&&e.key==='E'){e.preventDefault();openAdmin();}
+});
+</script>
+
+<!-- כפתור עריכה סודי - נראה רק כשמרחפים מעל הפינה -->
+<div id="secretBtn" onclick="openAdmin()" title="ניהול" style="position:fixed;bottom:80px;left:22px;width:56px;height:56px;background:rgba(196,124,43,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9998;transition:all .3s;border:1px solid rgba(196,124,43,0.15)">
+  <span style="font-size:20px;opacity:0.3">⚙️</span>
+</div>
+<style>
+#secretBtn:hover{background:rgba(196,124,43,0.9)!important;border-color:transparent!important;}
+#secretBtn:hover span{opacity:1!important;font-size:22px!important;}
+</style>
 
 </body>
 </html>
