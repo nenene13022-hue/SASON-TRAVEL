@@ -307,13 +307,15 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
       </div>
       <div id="s1" style="display:none">
         <div class="slabel">שלב 2 מתוך 7</div>
-        <div class="fq">כמה מבוגרים? 👥</div>
-        <div class="rnum"><span id="pv">2</span> <small>מבוגרים</small></div>
-        <input type="range" min="1" max="30" value="2" oninput="document.getElementById('pv').textContent=this.value;fd.people=this.value">
+        <div class="fq">כמה מבוגרים? 👥 <small>(מעל גיל 12)</small></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <input class="fi" type="number" min="1" max="30" value="2" style="margin:0;width:80px;text-align:center;font-size:20px;font-weight:700" oninput="fd.people=parseInt(this.value)||1">
+          <span style="font-size:14px;color:#7a5c2e">מבוגרים</span>
+        </div>
         
         <!-- מוצג רק למשפחה -->
         <div id="kids-section" style="display:none">
-          <div class="fq" style="margin-top:8px">כמה ילדים? 👶</div>
+          <div class="fq" style="margin-top:8px">כמה ילדים? 👶 <small>(מתחת לגיל 12)</small></div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
             <input class="fi" type="number" min="1" max="10" value="1" style="margin:0;width:80px;text-align:center;font-size:20px;font-weight:700" oninput="fd.numKids=parseInt(this.value)||1;buildKidsAges()">
             <span style="font-size:14px;color:#7a5c2e">ילדים</span>
@@ -345,9 +347,18 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
           <div class="op" onclick="pick(this,'when','גמיש')"><span class="oi">🤷</span>גמיש</div>
         </div>
         <label class="fl">תאריך יציאה מועדף</label>
-        <input class="fi" type="date" id="df" oninput="fd.dateFrom=this.value">
+        <input class="fi" type="date" id="df" oninput="fd.dateFrom=this.value;var dt=document.getElementById('dt');dt.min=this.value;if(dt.value&&dt.value<this.value){dt.value='';fd.dateTo='';}">
         <label class="fl">תאריך חזרה מועדף</label>
         <input class="fi" type="date" id="dt" oninput="fd.dateTo=this.value">
+        <script>
+        (function(){
+          var today=new Date().toISOString().split('T')[0];
+          var df=document.getElementById('df');
+          var dt=document.getElementById('dt');
+          if(df){df.min=today;}
+          if(dt){dt.min=today;}
+        })();
+        </script>
         <div class="fq">כמה לילות? 🌙 <small>(במידה ולא מילאתם תאריך מדויק)</small></div>
         <div class="og og3">
           <div class="op" onclick="pick(this,'nights','סופש 3 לילות')"><span class="oi">🌙</span>סופ"ש</div>
@@ -384,11 +395,11 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
           <div class="op" onclick="toggleV(this,'קניות')"><span class="oi">🛍️</span>קניות</div>
           <div class="op" onclick="toggleV(this,'פסטיבלים')"><span class="oi">🎶</span>פסטיבלים</div>
         </div>
-        <div class="fq">סוג מלון? 🏨</div>
+        <div class="fq">סוג מלון? 🏨 <small>(אפשר לבחור כמה אפשרויות)</small></div>
         <div class="og og3">
-          <div class="op" onclick="pick(this,'hotel','3 כוכבים')"><span class="oi">⭐⭐⭐</span>3★</div>
-          <div class="op" onclick="pick(this,'hotel','4 כוכבים')"><span class="oi">⭐⭐⭐⭐</span>4★</div>
-          <div class="op" onclick="pick(this,'hotel','5 כוכבים')"><span class="oi">👑</span>5★</div>
+          <div class="op" onclick="toggleV(this,'3 כוכבים')"><span class="oi">🛎️</span><span style="font-size:12px;font-weight:700">3 כוכבים</span></div>
+          <div class="op" onclick="toggleV(this,'4 כוכבים')"><span class="oi">🌟</span><span style="font-size:12px;font-weight:700">4 כוכבים</span></div>
+          <div class="op" onclick="toggleV(this,'5 כוכבים')"><span class="oi">💎</span><span style="font-size:12px;font-weight:700">5 כוכבים</span></div>
         </div>
       </div>
       <div id="s6" style="display:none">
@@ -402,7 +413,10 @@ input[type=range]{width:100%;accent-color:#c47c2b;cursor:pointer;margin-bottom:1
         <input class="fi" type="text" id="fno" placeholder="אלרגיות, דרישות מיוחדות...">
       </div>
     </div>
-    <div class="mfoot" id="mfoot">
+    <div id="form-error" style="display:none;margin:0 26px 16px;padding:10px 14px;background:#fff3f3;border:1.5px solid #ffb3b3;border-radius:10px;font-size:13px;color:#c0392b;text-align:right;direction:rtl">
+  <span style="font-weight:700">⚠️ </span><span id="error-msg"></span>
+</div>
+<div class="mfoot" id="mfoot">
       <button class="bnext" id="bn" onclick="goNext()">המשך ←</button>
       <button class="bback" id="bb" onclick="goPrev()" style="display:none">← חזור</button>
     </div>
@@ -422,9 +436,19 @@ var fd={trip:'',people:2,isFamily:false,numKids:0,kidsAges:[],dest:'',when:'',da
 
 
 function openM(){
-  cur=0;fd={trip:'',people:2,kids:'',dest:'',when:'',dateFrom:'',dateTo:'',nights:'',budget:'',luggage:[],vibes:[],hotel:''};
+  cur=0;
+  fd={trip:'',people:2,isFamily:false,numKids:0,kidsAges:[],dest:'',when:'',dateFrom:'',dateTo:'',nights:'',budget:'',luggage:[],vibes:[],hotel:''};
   document.querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});
-  document.getElementById('pv').textContent='2';
+  // reset number inputs
+  var pInput=document.querySelector('#s1 input[type=number]');
+  if(pInput) pInput.value=2;
+  var kInput=document.querySelector('#kids-section input[type=number]');
+  if(kInput) kInput.value=1;
+  var today=new Date().toISOString().split('T')[0];
+  var df=document.getElementById('df');
+  var dt=document.getElementById('dt');
+  if(df){df.min=today;df.value='';}
+  if(dt){dt.min=today;dt.value='';}
   document.getElementById('modal').classList.add('open');
   document.getElementById('mbody').style.display='';
   document.getElementById('mfoot').style.display='';
@@ -448,21 +472,130 @@ function showS(n){
     if(ks) ks.style.display=fd.isFamily?'block':'none';
     if(fd.isFamily) buildKidsAges();
   }
-  document.querySelector('.mbox').scrollTop=0;cur=n;
+  document.querySelector('.mbox').scrollTop=0;cur=n;if(typeof hideError==='function')hideError();
 }
-function goNext(){if(cur===TOTAL-1){doSubmit();return;}showS(cur+1);}
+function showError(msg, fieldId){
+  var errDiv=document.getElementById('form-error');
+  var errMsg=document.getElementById('error-msg');
+  errMsg.textContent=msg;
+  errDiv.style.display='block';
+  // scroll to error
+  errDiv.scrollIntoView({behavior:'smooth',block:'center'});
+  // highlight field if given
+  if(fieldId){
+    var el=document.getElementById(fieldId);
+    if(el){
+      el.style.border='2px solid #e74c3c';
+      el.focus();
+      setTimeout(function(){el.style.border='';},3000);
+    }
+  }
+}
+
+function hideError(){
+  document.getElementById('form-error').style.display='none';
+}
+
+function goNext(){
+  hideError();
+  if(cur===TOTAL-1){doSubmit();return;}
+  
+  if(cur===0){
+    if(!fd.trip){
+      showError('נא לבחור עם מי אתם טסים ✈️');
+      return;
+    }
+  }
+  
+  if(cur===1){
+    var adultsInput=document.querySelector('#s1 input[type=number]');
+    var adultsVal=parseInt(adultsInput&&adultsInput.value)||0;
+    if(!adultsVal||adultsVal<1){
+      showError('נא למלא כמות מבוגרים (מעל גיל 12)','s1');
+      if(adultsInput){adultsInput.style.borderColor='#e74c3c';adultsInput.focus();setTimeout(function(){adultsInput.style.borderColor='';},3000);}
+      return;
+    }
+    fd.people=adultsVal;
+    
+    if(fd.isFamily){
+      var kidsInput=document.querySelector('#kids-section input[type=number]');
+      var kidsVal=parseInt(kidsInput&&kidsInput.value)||0;
+      if(!kidsVal||kidsVal<1){
+        showError('נא למלא כמות ילדים (מתחת לגיל 12)');
+        if(kidsInput){kidsInput.style.borderColor='#e74c3c';kidsInput.focus();setTimeout(function(){kidsInput.style.borderColor='';},3000);}
+        return;
+      }
+      fd.numKids=kidsVal;
+      var ages=fd.kidsAges||[];
+      for(var i=0;i<kidsVal;i++){
+        if(!ages[i]||ages[i]===''||ages[i]==='בחר גיל'){
+          showError('נא לבחור גיל לילד מספר '+(i+1));
+          var sel=document.querySelectorAll('#kids-ages select')[i];
+          if(sel){sel.style.borderColor='#e74c3c';sel.focus();setTimeout(function(){sel.style.borderColor='';},3000);}
+          return;
+        }
+      }
+    }
+  }
+  
+  if(cur===2){
+    var destInput=document.querySelector('#s2 input[type=text]');
+    var destVal=destInput?destInput.value.trim():'';
+    if(!fd.dest&&!destVal){
+      showError('נא לבחור יעד מהרשימה או לכתוב יעד בשורה למטה 🌍');
+      if(destInput){destInput.style.borderColor='#e74c3c';destInput.focus();setTimeout(function(){destInput.style.borderColor='';},3000);}
+      return;
+    }
+    if(destVal) fd.dest=destVal;
+  }
+  
+  if(cur===3){
+    var dfVal=document.getElementById('df').value;
+    var dtVal=document.getElementById('dt').value;
+    var hasDates=dfVal&&dtVal;
+    var hasWhen=fd.when&&fd.when!=='';
+    var hasNights=fd.nights&&fd.nights!=='';
+    if(!hasDates&&!hasWhen){
+      showError('נא לבחור מתי אתם רוצים לטוס 📅');
+      return;
+    }
+    if(!hasDates&&!hasNights){
+      showError('נא לבחור כמה לילות, או למלא תאריכים מדויקים 🌙');
+      return;
+    }
+  }
+  
+  showS(cur+1);
+}
 function goPrev(){if(cur>0)showS(cur-1);}
-function pick(el,f,v){el.closest('.og').querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});el.classList.add('on');fd[f]=v;}
+function pick(el,f,v){
+  var already=el.classList.contains('on');
+  el.closest('.og').querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});
+  if(!already){
+    el.classList.add('on');
+    fd[f]=v;
+  } else {
+    fd[f]='';
+  }
+}
 
 function pickTrip(el,v){
-  pick(el,'trip',v);
-  if(v==='משפחה עם ילדים'){
-    fd.isFamily=true;
+  var already=el.classList.contains('on');
+  el.closest('.og').querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});
+  if(!already){
+    el.classList.add('on');
+    fd.trip=v;
+    if(v==='משפחה עם ילדים'){fd.isFamily=true;}
+    else{fd.isFamily=false;fd.numKids=0;fd.kidsAges=[];}
   } else {
+    fd.trip='';
     fd.isFamily=false;
     fd.numKids=0;
     fd.kidsAges=[];
   }
+  // show/hide kids section
+  var ks=document.getElementById('kids-section');
+  if(ks) ks.style.display=fd.isFamily?'block':'none';
 }
 
 function buildKidsAges(){
