@@ -470,94 +470,17 @@ footer{background:#010610;border-top:1px solid rgba(0,180,216,0.07);padding:52px
 <script>
 
 var D={
-  greece:{name:"יוון",sub:"Mediterranean · Greece",emoji:"🏛️",city_id:"264371",
-    img:"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&q=80",
-    desc:"יוון — ארץ האלים, הים הכחול העמוק והאדריכלות העתיקה. שקיעות סנטוריני שיצקו את הלב, חופי איי מושלמים ואוכל ים תיכוני בלתי נשכח.",
-    flight:"כ-2 שעות טיסה",
-    hl:["שקיעות סנטוריני","האקרופוליס באתונה","חופי מיקונוס","שייט בין האיים","אוכל ים תיכוני","מוזיאון הלאומי"],
-    dname:"Brown Beach Evia Island ⭐⭐⭐⭐",dinfo:"6–9 ספטמבר · 3 לילות · הכל כלול",price:"₪2,058",psub:"לאדם",wa:"אני מעוניין בדיל יוון"},
-  dubai:{name:"דובאי",sub:"UAE · Dubai",emoji:"🏙️",city_id:"292223",
-    img:"https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80",
-    desc:"דובאי — עיר העתיד שלא ישנה. גורדי שחקים שפורצים, קניונים ענקיים ומדבר זהב. מקום שחייבים לבקר לפחות פעם אחת בחיים.",
-    flight:"כ-3 שעות טיסה",
-    hl:["בורג חליפה","דובאי מול","ספארי מדבר","חוף ג׳ומיירה","פיר אוף דובאי","מטבח בינלאומי"],
-    dname:"חבילת VIP",dinfo:"תאריך גמיש · 4 לילות",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל דובאי"},
-  tbilisi:{name:"טביליסי",sub:"Georgia · Tbilisi",emoji:"🏰",city_id:"611717",
-    img:"https://images.unsplash.com/photo-1567184139571-dca9a65abb3d?w=800&q=80",
-    desc:"טביליסי — המצלה הנסתרת של אירופה. עיר עתיקה עם אדריכלות ייחודית, יין מקומי מעולה ואנשים חמים ומספקים.",
-    flight:"כ-2.5 שעות טיסה",
-    hl:["העיר העתיקה","מצודת נריקלה","מרחצאות גופרית","טיול ליין","יין מקומי","מטבח גרוזיני"],
-    dname:"Wyndham Grand Tbilisi ⭐⭐⭐⭐⭐",dinfo:"25–28 אוקטובר · 3 לילות · B&B",price:"₪1,751",psub:"לאדם",wa:"אני מעוניין בדיל טביליסי"},
-  bucharest:{name:"בוקרשט",sub:"Romania · Bucharest",emoji:"🏙️",city_id:"683506",
-    img:"bucharest.jpg",
-    desc:"בוקרשט — פריז של מזרח אירופה. ארמונות מפוארים, חיי לילה אגדיים ומחירים נמוכים בהשוואה למערב אירופה.",
-    flight:"כ-2.5 שעות טיסה",
-    hl:["ארמון הפרלמנט","Lipscani","פארק הרמסטראו","Calea Victoriei","חיי לילה","קניות זולות"],
-    dname:"Mercure Bucharest Unirii ⭐⭐⭐⭐",dinfo:"10–13 ספטמבר · ביטול חינם",price:"₪2,242",psub:"לאדם",wa:"אני מעוניין בדיל בוקרשט"},
-  budapest:{name:"בודפשט",sub:"Hungary · Budapest",emoji:"🇭🇺",city_id:"3054643",
-    img:"https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=800&q=80",
-    desc:"בודפשט — המלכה של הדונאו. עיר מקסימה עם אדריכלות ברוק מופלאה, מרחצאות מים חמים מדהימים וחיי לילה בלתי נשכחים.",
-    flight:"כ-3.5 שעות טיסה",
-    hl:["מרחץ סצחני גדול","הפרלמנט על הדונאו","רובע היהודי","אמנות בשינוי שטרות","מרכז העיר העתיקה","בתי קפה ומסעדות"],
-    dname:"חבילת בודפשט",dinfo:"3–5 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל בודפשט"},
-  prague:{name:"פראג",sub:"Czech Republic · Prague",emoji:"🏰",city_id:"3067696",
-    img:"https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&q=80",
-    desc:"פראג — עיר הזהב של מרכז אירופה. הקסם של מגדלות גותיות, גשר קרל המפורסם ושוקי שוקולד ובירה שלא תשכח.",
-    flight:"כ-3.5 שעות טיסה",
-    hl:["גשר קרל","רובע העיר העתיקה","טירת שעון אסטרונומי","טירת טירול בירה","מבצר פראג","שוקי חג מקסימים"],
-    dname:"חבילת פראג",dinfo:"3–5 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל פראג"},
-  vienna:{name:"ויינה",sub:"Austria · Vienna",emoji:"🎶",city_id:"2761369",
-    img:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&q=80",
-    desc:"ויינה — עיר המוסיקה והתרבות של אירופה. בתי קפה איקוניים, ארמונות מפוארים ואופרה שלא תשכח.",
-    flight:"כ-4 שעות טיסה",
-    hl:["בית האופרה ויינה","ארמון שינברון","מוזיאון האמנות היסטורית","רינגשטראסה המפורסם","בתי קפה איקוניים","שוק חג חורף קסום"],
-    dname:"חבילת ויינה",dinfo:"3–5 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל ויינה"},
-  sofia:{name:"סופיה",sub:"Bulgaria · Sofia",emoji:"🇧🇬",city_id:"727011",
-    img:"https://images.unsplash.com/photo-1601808805302-a7e0081f4e2f?w=800&q=80",
-    desc:"סופיה — יעד סוד בלב אירופה. מחירים זולים באופן מיוחד, אוכל מצוין, חיי לילה תוססים ובניינים עתיקים מרהיבים.",
-    flight:"כ-3 שעות טיסה",
-    hl:["קתדרלת אלקסנדר נבסקי","רחוב ויטושה","הר ויטושה","בתי קפה וברים","שוק הנדל","מוזיאון פוזיאולוגיה"],
-    dname:"חבילת סופיה",dinfo:"3–5 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל סופיה"},
-  batumi:{name:"בטומי",sub:"Georgia · Batumi",emoji:"🏖️",city_id:"614540",
-    img:"batumi.jpg",
-    desc:"בטומי — הריביירה של הקוקז. גורדי שחקים ליד הים, חופי חצות משגעים ואוכל מקומי מדהים. שילוב בלתי נשכח של חוף ועיר.",
-    flight:"כ-2.5 שעות טיסה",
-    hl:["חוף הים השחור","רחוב אירופה","גן בוטני","ליליא מטיילת","אקווה פארק","מסעדות דגים טריים"],
-    dname:"חבילת בטומי",dinfo:"4–6 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל בטומי"},
-  athens:{name:"אתונה",sub:"Greece · Athens",emoji:"🏛️",city_id:"264371",
-    img:"https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&q=80",
-    desc:"אתונה — בירת האלים וערש המערבות. שער האקרופוליס הסמלינפוליס, טאברנות במונסטירקי ואוכל רחוב מדהים.",
-    flight:"כ-2 שעות טיסה",
-    hl:["האקרופוליס","שוקי מונסטירקי","ליקביטוס","טברנות אוזוניאו","נסיעות אוסקי ליום","חיי לילה בגאזי"],
-    dname:"חבילת אתונה",dinfo:"3–5 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל אתונה"},
-  amsterdam:{name:"אמסטרדם",sub:"Netherlands · Amsterdam",emoji:"🚲",city_id:"2759794",
-    img:"https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&q=80",
-    desc:"אמסטרדם — עיר התעלות והאופניים. תעלות צרים, מוזיאון ון גוג ובתי דין בריאנ פראנק. עיר שכובשת את הלב.",
-    flight:"כ-4.5 שעות טיסה",
-    hl:["תעלות בסירות","מוזיאון ון גוג","שוק הפרחים","מתחם ארף","טיול בסירות","מוזיאון רייקסמוסאים"],
-    dname:"חבילת אמסטרדם",dinfo:"3–5 לילות · טיסה + מלון",price:"לפי בקשה",psub:"לאדם",wa:"אני מעוניין בדיל אמסטרדם"},
-  surprise:{name:"הפתיעו אותי",sub:"Surprise Destination",emoji:"🎲",city_id:"293397",
-    img:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
-    desc:"אוהבים הרפתקאות? תנו לנו לבחור בשבילכם! אנחנו נמצא לכם את הדיל הכי משתלם לאותה תקופה.",
-    flight:"טיסות ישירות",
-    hl:["מחיר מוזל","פחות תיירים","חוויה אותנטית","אנחנו בוחרים","מתאים לזוגות","ליווי מלא"],
-    dname:"דיל הפתעה",dinfo:"לפי זמינות",price:"מחיר מדהים",psub:"לאדם",wa:"אני מעוניין בדיל הפתעה"}
+    athens:{title:"יוון (אתונה)",desc:"חופשה קסומה באתונה ההיסטורית, הכוללת סיורים באקרופוליס, טברנות אותנטיות וחופים מרהיבים.",currency:"אירו (EUR)",flight_duration:"שעתיים ו-20 דקות",language:"יוונית",city_id:"2643743"},
+    budapest:{title:"בודפשט",desc:"פנינת הדנובה מציעה מרחצאות חמים מפורסמים, ארכיטקטורה מדהימה וחיי לילה תוססים ברובע היהודי.",currency:"פורינט הונגרי (HUF)",flight_duration:"3 שעות ו-15 דקות",language:"הונגרית",city_id:"3054643"},
+    prague:{title:"פראג",desc:"עיר מאה המגדלים תכבוש אתכם עם סמטאות ציוריות, מצודה עתיקה, גשר קארל ובירה מעולה וזולה.",currency:"קורונה צ'כית (CZK)",flight_duration:"3 שעות ו-45 דקות",language:"צ'כית",city_id:"3067696"},
+    vienna:{title:"וינה",desc:"בירת התרבות והמוזיקה הקלאסית. ארמונות מפוארים, בתי קפה היסטוריים ושניצל וינאי אמיתי.",currency:"אירו (EUR)",flight_duration:"3 שעות و-30 דקות",language:"גרמנית",city_id:"2761369"},
+    bucharest:{title:"בוקרשט",desc:"חופשה אורבנית מפתיעה עם שדרות רחבות, פארקים ירוקים, חיי לילה סוערים וקניות במחירים מעולים.",currency:"ליי רומני (RON)",flight_duration:"שעתיים ו-45 דקות",language:"רומנית",city_id:"683506"},
+    sofia:{title:"סופיה",desc:"יעד מושלם וזול המשלב היסטוריה עשירה, כנסיות מרשימות, קולינריה משובחת וקרבה להרי ויטושה המרהיבים.",currency:"לב בולגרי (BGN)",flight_duration:"שעתיים ו-30 דקות",language:"בולגרית",city_id:"727011"},
+    tbilisi:{title:"טביליסי",desc:"בירת גאורגיה המשלבת עיר עתיקה קסומה, מרחצאות גופרית, אוכל גאורגי אלוהי ואירוח חם ומזמין.",currency:"לארי גאורגי (GEL)",flight_duration:"שעתיים ו-50 דקות",language:"גאורגית",city_id:"611717"},
+    batumi:{title:"בטומי",desc:"עיר חוף תוססת על שפת הים השחור, המציעה בתי קזינו מפוארים, שדרת חוף ארוכה ומודרנית ואווירה של חופש.",currency:"לארי גאורגי (GEL)",flight_duration:"שעתיים ו-45 דקות",language:"גאורגית",city_id:"615532"},
+    amsterdam:{title:"אמסטרדם",desc:"עיר התעלות הציוריות, מוזיאונים ברמה עולמית, אופניים בכל פינה ואווירה חופשית וייחודית שאין בשום מקום אחר.",currency:"אירו (EUR)",flight_duration:"4 שעות ו-50 דקות",language:"הולנדית",city_id:"2759794"},
+    dubai:{title:"דובאי",desc:"חוויה עתידנית ויוקרתית: המגדל הגבוה בעולם, קניוני ענק, פארקי שעשועים, אטרקציות מטורפות וחופים מוזהבים.",currency:"דירהם (AED)",flight_duration:"3 שעות ו-15 דקות",language:"ערבית / אנגלית",city_id:"292223"}
 };
-
-var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis')});},{threshold:0.08});
-document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
-function tFaq(el){var o=el.classList.contains('open');document.querySelectorAll('.fi').forEach(function(f){f.classList.remove('open')});if(!o)el.classList.add('open');}
-function getWeatherIcon(id){
-  if(id>=200&&id<300)return '\u26a1';
-  if(id>=300&&id<600)return '\U0001f327\ufe0f';
-  if(id>=600&&id<700)return '\u2744\ufe0f';
-  if(id>=700&&id<800)return '\U0001f32b\ufe0f';
-  if(id===800)return '\u2600\ufe0f';
-  if(id>800)return '\u26c5';
-  return '\U0001f324\ufe0f';
-}
-
-// city_id now in D object
 
 function fetchWeather(cityId,callback){
     var url='https://api.openweathermap.org/data/2.5/weather?id='+cityId+'&appid=6e39fe09d67a972d018ed2c573f39306&units=metric&lang=he';
@@ -568,8 +491,6 @@ function openDest(k){
     var modal=document.getElementById('dest-modal');
     if(!modal)return;
     modal.style.display='block';
-
-    // מילוי הנתונים המקוריו של היעד מאובייקט D שלך
     if(D[k]){
         document.getElementById('modal-title').innerText=D[k].title||'';
         document.getElementById('modal-desc').innerText=D[k].desc||'';
@@ -577,21 +498,16 @@ function openDest(k){
         document.getElementById('modal-flight').innerText=D[k].flight_duration||'';
         document.getElementById('modal-language').innerText=D[k].language||'';
     }
-
-    // קבלת ה-city_id בדיוק כמו שהיה בתמונות המקוריות שלך
     var cid=D[k]&&D[k].city_id?D[k].city_id:null;
     if(cid){
         fetchWeather(cid,function(w){
-            // בדיקה בטוחה: אם ה-API החזיר נתונים מלאים, נציג אותם. אם לא - נציג ברירת מחדל
             if(w && w.main && w.weather && w.weather[0]){
-                document.getElementById('modal-temp').innerText=Math.round(w.main.temp)+'°C';
-                document.getElementById('modal-weather-desc').innerText=w.weather[0].description;
-                document.getElementById('modal-weather-icon').src='https://openweathermap.org/img/wn/'+w.weather[0].icon+'.png';
+                document.getElementById('modal-temp').innerText = Math.round(w.main.temp) + '°C';
+                document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
+                document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
             } else {
-                // מונע את הציג של המילה undefined ומציג טקסט נקי
-                document.getElementById('modal-temp').innerText='--°C';
-                document.getElementById('modal-weather-desc').innerText='בהיר';
-                document.getElementById('modal-weather-icon').src='https://openweathermap.org/img/wn/01d.png';
+                document.getElementById('modal-temp').innerText = '--°C';
+                document.getElementById('modal-weather-desc').innerText = 'לא זמין';
             }
         });
     }
