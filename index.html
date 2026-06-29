@@ -577,52 +577,57 @@ function openDest(k){
   var d=D[k];if(!d)return;
   var hl=d.hl.map(function(h){return '<div class="hli">'+h+'</div>';}).join('');
   var waT=encodeURIComponent('\u05D4\u05D9\u05D9 SASON TRAVEL! '+d.wa);
-  document.getElementById('dpc').innerHTML=
-    '<button class="dbk" onclick="closeDest()">\u2190 \u05D7\u05D6\u05E8\u05D4 \u05DC\u05D0\u05EA\u05E8</button>'+
-    '<div style="height:200px;border-radius:8px;overflow:hidden;margin-bottom:24px;position:relative"><img src="'+d.img+'" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(2,8,24,.8),transparent)"></div><div style="position:absolute;bottom:16px;right:20px;display:flex;align-items:center;gap:12px"><div class="dem" style="font-size:36px">'+d.emoji+'</div><div><h1 style="font-size:28px;font-weight:900;color:#fff;margin:0">'+d.name+'</h1><p style="font-size:11px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase">'+d.sub+'</p></div></div></div>'+
-    '<div class="dg2"><div class="dcd"><h3>\u05E2\u05DC \u05D4\u05D9\u05E2\u05D3</h3><p>'+d.desc+'</p></div>'+
-    '<div style="display:flex;flex-direction:column;gap:11px"><div class="dcd"><h3>\u05DE\u05D6\u05D2 \u05D0\u05D5\u05D5\u05D9\u05E8</h3><p>'+d.weather+'</p></div>'+
-    '<div class="dcd"><h3>\u05D8\u05D9\u05E1\u05D4</h3><p>'+d.flight+'</p></div></div></div>'+
-    '<div class="dhl"><h2>\u05DE\u05D4 \u05DC\u05E2\u05E9\u05D5\u05EA \u05E9\u05DD?</h2><div class="hlg">'+hl+'</div></div>'+
-    '<div class="ddl"><div><h3>'+d.dname+'</h3><p>'+d.dinfo+'</p></div>'+
-    '<div class="dpr2">'+d.price+'<small>'+d.psub+'</small></div></div>'+
-    '<div class="dct"><h2>\u05DE\u05E2\u05D5\u05E0\u05D9\u05D9\u05E0\u05D9\u05DD? \uD83C\uDF0D</h2>'+
-    '<p>\u05E9\u05DC\u05D7\u05D5 \u05D5\u05E0\u05D7\u05D6\u05D5\u05E8 \u05D0\u05DC\u05D9\u05DB\u05DD \u05E2\u05DD \u05D4\u05E6\u05E2\u05D4 \u05D0\u05D9\u05E9\u05D9\u05EA</p>'+
-    '<a class="dwb2" href="https://wa.me/972545412040?text='+waT+'" target="_blank">\uD83D\uDCAC WhatsApp \u05E2\u05DB\u05E9\u05D9\u05D5</a></div>';
-  document.getElementById('dov').classList.add('open');
-  document.body.style.overflow='hidden';
-  // Fetch live weather
-if(k && k !== 'surprise'){
-    fetchWeather(k,function(w){
-      var el=document.getElementById('wx-data');
-     if (w && w.main && w.weather && w.weather[0]) {
-    // עיגול המעלות למספר שלם והוספת סימן מעלות
-    document.getElementById('modal-temp').innerText = Math.round(w.main.temp) + '°C';
-    // הטמעת תיאור מזג האוויר בעברית (למשל: "שמיים בהירים")
-    document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
-    // עדכון האייקון בהתאם למצב
-    document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
-} else {
-    // במקרה שמשהו חסר בנתונים, נשים ערך ברירת מחדל יפה במקום undefined
+  function openDest(k) {
+    var modal = document.getElementById('dest-modal');
+    if (!modal) return;
+
+    // הצגת המודל
+    modal.style.display = 'block';
+
+    // איפוס ערכי מזג האוויר לטעינה כדי שלא יראו undefined
     document.getElementById('modal-temp').innerText = '--°C';
-    document.getElementById('modal-weather-desc').innerText = 'לא זמין כרגע';
+    document.getElementById('modal-weather-desc').innerText = 'טוען...';
+    document.getElementById('modal-weather-icon').src = '';
+
+    // מילוי שאר פרטי היעד הכלליים מתוך אובייקט הנתונים D
+    if (D[k]) {
+        if (document.getElementById('modal-title')) document.getElementById('modal-title').innerText = D[k].title || '';
+        if (document.getElementById('modal-desc')) document.getElementById('modal-desc').innerText = D[k].desc || '';
+    }
+
+    // קריאה למזג האוויר מה-API רק אם זה יעד אמיתי ולא "הפתיעו אותי"
+    if (k && k !== 'surprise') {
+        // מפה שמקשרת בין המפתח של הכרטיס לשם העיר המדויק באנגלית עבור ה-API
+        var cityMap = {
+            'athens': 'Athens',
+            'greece': 'Athens',
+            'budapest': 'Budapest',
+            'prague': 'Prague',
+            'vienna': 'Vienna',
+            'bucharest': 'Bucharest',
+            'sofia': 'Sofia',
+            'tbilisi': 'Tbilisi',
+            'batumi': 'Batumi',
+            'dubai': 'Dubai'
+        };
+
+        var apiCityName = cityMap[k] ? cityMap[k] : k;
+
+        fetchWeather(apiCityName, function(w) {
+            if (w && w.main && w.weather && w.weather[0]) {
+                // הצגת הטמפרטורה מעוגלת
+                document.getElementById('modal-temp').innerText = Math.round(w.main.temp) + '°C';
+                // תיאור מזג האוויר בעברית
+                document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
+                // אייקון מזג האוויר מהשרת של OpenWeather
+                document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
+            } else {
+                document.getElementById('modal-temp').innerText = '--°C';
+                document.getElementById('modal-weather-desc').innerText = 'לא זמין כרגע';
+            }
+        });
+    }
 }
-      }
- );
-  }
-}
-function closeDest(){document.getElementById('dov').classList.remove('open');document.body.style.overflow='';}
-var cur=0,TOT=7;
-var fd={trip:'',people:2,isF:false,numKids:0,kidsAges:[],dest:'',when:'',dateFrom:'',dateTo:'',nights:'',budget:'',lug:[],vibes:[]};
-function openM(){
-  cur=0;fd={trip:'',people:2,isF:false,numKids:0,kidsAges:[],dest:'',when:'',dateFrom:'',dateTo:'',nights:'',budget:'',lug:[],vibes:[]};
-  document.querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});
-  var today=new Date().toISOString().split('T')[0];
-  var df=document.getElementById('df');var dt=document.getElementById('dt');
-  if(df){df.min=today;df.value='';}if(dt){dt.min=today;dt.value='';}
-  document.getElementById('modal').classList.add('open');
-  document.getElementById('mbo').style.display='';document.getElementById('mft').style.display='';
-  document.querySelector('.mh').style.display='';document.getElementById('suc').classList.remove('show');
   shS(0);
 }
 function closeM(){document.getElementById('modal').classList.remove('open');}
