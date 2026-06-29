@@ -561,45 +561,29 @@ function getWeatherIcon(id){
 
 function fetchWeather(cityName,callback){
     var url='https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=6e39fe09d67a972d018ed2c573f39306&units=metric&lang=he';
-  fetch(url).then(function(r){return r.json();}).then(function(d){
-    callback({
-      temp:Math.round(d.main.temp),
-      feels:Math.round(d.main.feels_like),
-      desc:d.weather[0].description,
-      icon:getWeatherIcon(d.weather[0].id),
-      humidity:d.main.humidity,
-      wind:Math.round(d.wind.speed*3.6)
-    });
-  }).catch(function(){callback(null);});
+    fetch(url).then(function(r){return r.json();}).then(function(w){callback(w);}).catch(function(){callback(null);});
 }
 
 function openDest(k){
-  var d=D[k];if(!d)return;
-  var hl=d.hl.map(function(h){return '<div class="hli">'+h+'</div>';}).join('');
-  var waT=encodeURIComponent('\u05D4\u05D9\u05D9 SASON TRAVEL! '+d.wa);
-  function openDest(k) {
-    var modal = document.getElementById('dest-modal');
-    if (!modal) return;
+    var modal=document.getElementById('dest-modal');
+    if(!modal)return;
+    modal.style.display='block';
+    
+    // איפוס ערכים לפני טעינה
+    document.getElementById('modal-temp').innerText='--°C';
+    document.getElementById('modal-weather-desc').innerText='טוען...';
+    document.getElementById('modal-weather-icon').src='';
 
-    // פתיחת המודל (החלון)
-    modal.style.display = 'block';
-
-    // איפוס זמני של ערכי מזג האוויר לטעינה
-    document.getElementById('modal-temp').innerText = '--°C';
-    document.getElementById('modal-weather-desc').innerText = 'טוען...';
-    document.getElementById('modal-weather-icon').src = '';
-
-    // מילוי כל המפרט והטקסטים בדיוק לפי הנתונים המקוריים שלך באובייקט D
-    if (D[k]) {
-        document.getElementById('modal-title').innerText = D[k].title || '';
-        document.getElementById('modal-desc').innerText = D[k].desc || '';
-        document.getElementById('modal-currency').innerText = D[k].currency || '';
-        document.getElementById('modal-flight').innerText = D[k].flight_duration || '';
-        document.getElementById('modal-language').innerText = D[k].language || '';
+    if(D[k]){
+        document.getElementById('modal-title').innerText=D[k].title||'';
+        document.getElementById('modal-desc').innerText=D[k].desc||'';
+        document.getElementById('modal-currency').innerText=D[k].currency||'';
+        document.getElementById('modal-flight').innerText=D[k].flight_duration||'';
+        document.getElementById('modal-language').innerText=D[k].language||'';
     }
 
-    // הבאת מזג האוויר לפי שם עיר מדויק באנגלית מה-API
-    if (k && k !== 'surprise') {
+    if(k && k !== 'surprise'){
+        // מפה פשוטה שמתרגמת את מפתח הכרטיס לשם העיר המדויק באנגלית עבור ה-API
         var cityMap = {
             'athens': 'Athens',
             'greece': 'Athens',
@@ -615,14 +599,14 @@ function openDest(k){
 
         var apiCityName = cityMap[k] ? cityMap[k] : k;
 
-        fetchWeather(apiCityName, function(w) {
-            if (w && w.main && w.weather && w.weather[0]) {
-                document.getElementById('modal-temp').innerText = Math.round(w.main.temp) + '°C';
-                document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
-                document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
-            } else {
-                document.getElementById('modal-temp').innerText = '--°C';
-                document.getElementById('modal-weather-desc').innerText = 'לא זמין';
+        fetchWeather(apiCityName,function(w){
+            if(w && w.main && w.weather && w.weather[0]){
+                document.getElementById('modal-temp').innerText=Math.round(w.main.temp)+'°C';
+                document.getElementById('modal-weather-desc').innerText=w.weather[0].description;
+                document.getElementById('modal-weather-icon').src='https://openweathermap.org/img/wn/'+w.weather[0].icon+'.png';
+            }else{
+                document.getElementById('modal-temp').innerText='--°C';
+                document.getElementById('modal-weather-desc').innerText='לא זמין';
             }
         });
     }
@@ -635,9 +619,6 @@ function openDest(k){
                 document.getElementById('modal-temp').innerText = '--°C';
                 document.getElementById('modal-weather-desc').innerText = 'לא זמין כרגע';
             }
-        });
-    }
-}
   shS(0);
 }
 function closeM(){document.getElementById('modal').classList.remove('open');}
@@ -651,6 +632,7 @@ function shS(n){
   else{bn.textContent='\u05D4\u05DE\u05E9\u05DA \u2190';bn.className='bn2';}
   if(n===1){var ks=document.getElementById('ks');if(ks)ks.style.display=fd.isF?'block':'none';if(fd.isF)bKA();}
   document.querySelector('.mb').scrollTop=0;cur=n;clrE();
+  
 }
 function pk(el,f,v){var a=el.classList.contains('on');el.closest('.og').querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});if(!a){el.classList.add('on');fd[f]=v;}else{fd[f]='';}}
 function pT(el,v){var a=el.classList.contains('on');el.closest('.og').querySelectorAll('.op').forEach(function(o){o.classList.remove('on')});if(!a){el.classList.add('on');fd.trip=v;fd.isF=(v==='\u05DE\u05E9\u05E4\u05D7\u05D4 \u05E2\u05DD \u05D9\u05DC\u05D3\u05D9\u05DD');if(!fd.isF){fd.numKids=0;fd.kidsAges=[];}}else{fd.trip='';fd.isF=false;fd.numKids=0;fd.kidsAges=[];}}
