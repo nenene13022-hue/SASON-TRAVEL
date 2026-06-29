@@ -581,23 +581,25 @@ function openDest(k){
     var modal = document.getElementById('dest-modal');
     if (!modal) return;
 
-    // הצגת המודל
+    // פתיחת המודל (החלון)
     modal.style.display = 'block';
 
-    // איפוס ערכי מזג האוויר לטעינה כדי שלא יראו undefined
+    // איפוס זמני של ערכי מזג האוויר לטעינה
     document.getElementById('modal-temp').innerText = '--°C';
     document.getElementById('modal-weather-desc').innerText = 'טוען...';
     document.getElementById('modal-weather-icon').src = '';
 
-    // מילוי שאר פרטי היעד הכלליים מתוך אובייקט הנתונים D
+    // מילוי כל המפרט והטקסטים בדיוק לפי הנתונים המקוריים שלך באובייקט D
     if (D[k]) {
-        if (document.getElementById('modal-title')) document.getElementById('modal-title').innerText = D[k].title || '';
-        if (document.getElementById('modal-desc')) document.getElementById('modal-desc').innerText = D[k].desc || '';
+        document.getElementById('modal-title').innerText = D[k].title || '';
+        document.getElementById('modal-desc').innerText = D[k].desc || '';
+        document.getElementById('modal-currency').innerText = D[k].currency || '';
+        document.getElementById('modal-flight').innerText = D[k].flight_duration || '';
+        document.getElementById('modal-language').innerText = D[k].language || '';
     }
 
-    // קריאה למזג האוויר מה-API רק אם זה יעד אמיתי ולא "הפתיעו אותי"
+    // הבאת מזג האוויר לפי שם עיר מדויק באנגלית מה-API
     if (k && k !== 'surprise') {
-        // מפה שמקשרת בין המפתח של הכרטיס לשם העיר המדויק באנגלית עבור ה-API
         var cityMap = {
             'athens': 'Athens',
             'greece': 'Athens',
@@ -615,8 +617,16 @@ function openDest(k){
 
         fetchWeather(apiCityName, function(w) {
             if (w && w.main && w.weather && w.weather[0]) {
-                // הצגת הטמפרטורה מעוגלת
                 document.getElementById('modal-temp').innerText = Math.round(w.main.temp) + '°C';
+                document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
+                document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
+            } else {
+                document.getElementById('modal-temp').innerText = '--°C';
+                document.getElementById('modal-weather-desc').innerText = 'לא זמין';
+            }
+        });
+    }
+}
                 // תיאור מזג האוויר בעברית
                 document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
                 // אייקון מזג האוויר מהשרת של OpenWeather
