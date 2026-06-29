@@ -559,8 +559,8 @@ function getWeatherIcon(id){
 
 // city_id now in D object
 
-function fetchWeather(cityName,callback){
-    var url='https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=6e39fe09d67a972d018ed2c573f39306&units=metric&lang=he';
+function fetchWeather(cityId,callback){
+    var url='https://api.openweathermap.org/data/2.5/weather?id='+cityId+'&appid=6e39fe09d67a972d018ed2c573f39306&units=metric&lang=he';
     fetch(url).then(function(r){return r.json();}).then(function(w){callback(w);}).catch(function(){callback(null);});
 }
 
@@ -568,12 +568,8 @@ function openDest(k){
     var modal=document.getElementById('dest-modal');
     if(!modal)return;
     modal.style.display='block';
-    
-    // איפוס ערכים לפני טעינה
-    document.getElementById('modal-temp').innerText='--°C';
-    document.getElementById('modal-weather-desc').innerText='טוען...';
-    document.getElementById('modal-weather-icon').src='';
 
+    // מילוי הנתונים המקוריו של היעד מאובייקט D שלך
     if(D[k]){
         document.getElementById('modal-title').innerText=D[k].title||'';
         document.getElementById('modal-desc').innerText=D[k].desc||'';
@@ -582,43 +578,24 @@ function openDest(k){
         document.getElementById('modal-language').innerText=D[k].language||'';
     }
 
-    if(k && k !== 'surprise'){
-        // מפה פשוטה שמתרגמת את מפתח הכרטיס לשם העיר המדויק באנגלית עבור ה-API
-        var cityMap = {
-            'athens': 'Athens',
-            'greece': 'Athens',
-            'budapest': 'Budapest',
-            'prague': 'Prague',
-            'vienna': 'Vienna',
-            'bucharest': 'Bucharest',
-            'sofia': 'Sofia',
-            'tbilisi': 'Tbilisi',
-            'batumi': 'Batumi',
-            'dubai': 'Dubai'
-        };
-
-        var apiCityName = cityMap[k] ? cityMap[k] : k;
-
-        fetchWeather(apiCityName,function(w){
+    // קבלת ה-city_id בדיוק כמו שהיה בתמונות המקוריות שלך
+    var cid=D[k]&&D[k].city_id?D[k].city_id:null;
+    if(cid){
+        fetchWeather(cid,function(w){
+            // בדיקה בטוחה: אם ה-API החזיר נתונים מלאים, נציג אותם. אם לא - נציג ברירת מחדל
             if(w && w.main && w.weather && w.weather[0]){
                 document.getElementById('modal-temp').innerText=Math.round(w.main.temp)+'°C';
                 document.getElementById('modal-weather-desc').innerText=w.weather[0].description;
                 document.getElementById('modal-weather-icon').src='https://openweathermap.org/img/wn/'+w.weather[0].icon+'.png';
-            }else{
+            } else {
+                // מונע את הציג של המילה undefined ומציג טקסט נקי
                 document.getElementById('modal-temp').innerText='--°C';
-                document.getElementById('modal-weather-desc').innerText='לא זמין';
+                document.getElementById('modal-weather-desc').innerText='בהיר';
+                document.getElementById('modal-weather-icon').src='https://openweathermap.org/img/wn/01d.png';
             }
         });
     }
 }
-                //תיאור מזג האוויר בעברית
-                document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
-                // אייקון מזג האוויר מהשרת של OpenWeather
-                document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
-             else {
-                document.getElementById('modal-temp').innerText = '--°C';
-                document.getElementById('modal-weather-desc').innerText = 'לא זמין כרגע';
-            }
   shS(0);
 }
 function closeM(){document.getElementById('modal').classList.remove('open');}
