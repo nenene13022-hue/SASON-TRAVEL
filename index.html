@@ -559,8 +559,8 @@ function getWeatherIcon(id){
 
 // city_id now in D object
 
-function fetchWeather(cityId,callback){
-  var url='https://api.openweathermap.org/data/2.5/weather?id='+cityId+'&appid=6e39fe09d67a972d018ed2c573f39306&units=metric&lang=he';
+function fetchWeather(cityName,callback){
+    var url='https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=6e39fe09d67a972d018ed2c573f39306&units=metric&lang=he';
   fetch(url).then(function(r){return r.json();}).then(function(d){
     callback({
       temp:Math.round(d.main.temp),
@@ -592,9 +592,8 @@ function openDest(k){
   document.getElementById('dov').classList.add('open');
   document.body.style.overflow='hidden';
   // Fetch live weather
-  var cid=D[k]&&D[k].city_id?D[k].city_id:null;
-  if(cid){
-    fetchWeather(cid,function(w){
+if(k && k !== 'surprise'){
+    fetchWeather(k,function(w){
       var el=document.getElementById('wx-data');
       if(!el)return;
       if(w){
