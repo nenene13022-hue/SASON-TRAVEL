@@ -611,11 +611,11 @@ function openDest(k){
         });
     }
 }
-                // תיאור מזג האוויר בעברית
+                //תיאור מזג האוויר בעברית
                 document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
                 // אייקון מזג האוויר מהשרת של OpenWeather
                 document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
-            } else {
+             else {
                 document.getElementById('modal-temp').innerText = '--°C';
                 document.getElementById('modal-weather-desc').innerText = 'לא זמין כרגע';
             }
