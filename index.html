@@ -595,12 +595,18 @@ function openDest(k){
 if(k && k !== 'surprise'){
     fetchWeather(k,function(w){
       var el=document.getElementById('wx-data');
-      if(!el)return;
-      if(w){
-        el.innerHTML=w.icon+' '+w.temp+'\u00b0C, '+w.desc+
-          '<br><small style="color:rgba(255,255,255,.4)">\u{1F4A7} \u05dc\u05d7\u05d5\u05ea: '+w.humidity+'% \u00b7 \U0001f4a8 \u05e8\u05d5\u05d7: '+w.wind+' \u05e7\u05de\u05f4\u05e9</small>';
-      } else {
-        el.textContent=d.weather;
+     if (w && w.main && w.weather && w.weather[0]) {
+    // עיגול המעלות למספר שלם והוספת סימן מעלות
+    document.getElementById('modal-temp').innerText = Math.round(w.main.temp) + '°C';
+    // הטמעת תיאור מזג האוויר בעברית (למשל: "שמיים בהירים")
+    document.getElementById('modal-weather-desc').innerText = w.weather[0].description;
+    // עדכון האייקון בהתאם למצב
+    document.getElementById('modal-weather-icon').src = 'https://openweathermap.org/img/wn/' + w.weather[0].icon + '.png';
+} else {
+    // במקרה שמשהו חסר בנתונים, נשים ערך ברירת מחדל יפה במקום undefined
+    document.getElementById('modal-temp').innerText = '--°C';
+    document.getElementById('modal-weather-desc').innerText = 'לא זמין כרגע';
+}
       }
     });
   }
